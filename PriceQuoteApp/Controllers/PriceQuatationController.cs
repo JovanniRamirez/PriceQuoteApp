@@ -4,18 +4,19 @@ using System.Diagnostics;
 
 namespace PriceQuoteApp.Controllers
 {
-    public class HomeController : Controller
+    public class PriceQuatationController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<PriceQuatationController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public PriceQuatationController(ILogger<PriceQuatationController> logger)
         {
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-            return View();
+            PriceQuotation model = new PriceQuotation();
+            return View(model);
         }
 
         public IActionResult Privacy()
