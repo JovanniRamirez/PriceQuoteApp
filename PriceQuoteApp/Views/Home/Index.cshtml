@@ -1,4 +1,64 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model PriceQuoteApp.Models.PriceQuotation
+
+@{
+    ViewData["Title"] = "Price Quotation";
 }
-<h2>Price Quote App</h2>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Price Quotation</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Price Quotation</h1>
+        <form method="post" class="needs-validation" novalidate>
+            <div class="form-group">
+                <label for="Subtotal">Subtotal:</label>
+                <input type="text" class="form-control" id="Subtotal" name="Subtotal" value="@Model.Subtotal" required>
+                <span asp-validation-for="Subtotal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="DiscountPercent">Discount Percent:</label>
+                <input type="text" class="form-control" id="DiscountPercent" name="DiscountPercent" value="@Model.DiscountPercent" required>
+                <span asp-validation-for="DiscountPercent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="DiscountAmount">Discount Amount:</label>
+                <input type="text" class="form-control" id="DiscountAmount" value="@Model.DiscountAmount" readonly>
+            </div>
+            <div class="form-group">
+                <label for="Total">Total:</label>
+                <input type="text" class="form-control" id="Total" value="@Model.Total" readonly>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Calculate</button>
+                <a href="/Home/Reset" class="btn btn-secondary ml-2">Clear</a>
+            </div>
+        </form>
+
+        <div>
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li class="text-danger">@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.7/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        function clearFields() {
+            // Reset the form to its initial state
+            document.querySelector('form').reset();
+
+            // Clear validation messages
+            $('form').validate().resetForm();
+            $('form').find('.text-danger').removeClass('text-danger');
+        }
+    </script>
+</body>
+</html>

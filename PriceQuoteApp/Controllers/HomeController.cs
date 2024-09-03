@@ -1,22 +1,41 @@
+// Ignore Spelling: App
+
 using Microsoft.AspNetCore.Mvc;
 using PriceQuoteApp.Models;
 using System.Diagnostics;
 
 namespace PriceQuoteApp.Controllers
 {
-    public class PriceQuatationController : Controller
+    public class HomeController : Controller
     {
-        private readonly ILogger<PriceQuatationController> _logger;
+        private readonly ILogger<HomeController> _logger;
 
-        public PriceQuatationController(ILogger<PriceQuatationController> logger)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             PriceQuotation model = new PriceQuotation();
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Index(PriceQuotation model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.Calculate();
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Reset()
+        {
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()
